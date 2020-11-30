@@ -1,7 +1,15 @@
 README.md
+reinforcement_learning.ipynb
 setup.py
+.ipynb_checkpoints/reinforcement_learning-checkpoint.ipynb
+gym_note4_mdp/__init__.py
 gym_note4_mdp.egg-info/PKG-INFO
 gym_note4_mdp.egg-info/SOURCES.txt
 gym_note4_mdp.egg-info/dependency_links.txt
 gym_note4_mdp.egg-info/requires.txt
 gym_note4_mdp.egg-info/top_level.txt
+gym_note4_mdp/__pycache__/__init__.cpython-37.pyc
+gym_note4_mdp/envs/__init__.py
+gym_note4_mdp/envs/note4_env.py
+gym_note4_mdp/envs/__pycache__/__init__.cpython-37.pyc
+gym_note4_mdp/envs/__pycache__/note4_env.cpython-37.pyc

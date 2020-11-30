@@ -9,9 +9,10 @@ from gym.envs.toy_text import discrete
 import numpy as np
 
 MAP = [
+    "Environment",
     "+---------+",
     "|B: : : :S|",
-    "+---------+",
+    "+---------+"
 ]
 
 
@@ -78,7 +79,7 @@ class Note4Env(gym.Env):
                 reward = 0
                 self.state += 1
             else: # 'exit'
-                reward = 10
+                reward = self.large
                 done = True
         else:
             if action == 0: # 'backwards'
@@ -87,13 +88,17 @@ class Note4Env(gym.Env):
             elif action == 1: # 'forwards'
                 reward = 0
             else: # 'exit'
-                reward = 1
+                reward = self.small
                 done = True
             
         return self.state, reward, done, {}
 
     def reset(self):
-        self.state = 0
+        self.state = 2
+        self.large = 10
+        self.small = 1
+        self.slip = 0.2
+        self.discount_factor = 0.1
         return self.state
     
     def render(self, mode="human", done=False):
@@ -104,11 +109,13 @@ class Note4Env(gym.Env):
         out = [[c.decode('utf-8') for c in line] for line in out]
         agent_position = self.state
 
+        # out[8][8] = utils.colorize(out[8][8], 'yellow', highlight=True)
+
         if agent_position <= 5 and not done:
-            out[1][2*agent_position + 1] = utils.colorize(out[1][2*agent_position + 1], 'yellow', highlight=True)
+            out[2][2*agent_position + 1] = utils.colorize(out[2][2*agent_position + 1], 'yellow', highlight=True)
 
         if agent_position <= 5 and done:
-            out[1][2*agent_position + 1] = utils.colorize(out[1][2*agent_position + 1], 'green', highlight=True)
+            out[2][2*agent_position + 1] = utils.colorize(out[2][2*agent_position + 1], 'green', highlight=True)
 
         outfile.write("\n".join(["".join(row) for row in out]) + "\n")
 
