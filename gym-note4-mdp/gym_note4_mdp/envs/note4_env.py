@@ -12,12 +12,14 @@ MAP = [
     "Environment",
     "+---------+",
     "|B: : : :S|",
-    "+---------+"
+    "+---------+",
+    "+-+        ",
+    "|T|        ",
+    "+-+        "
 ]
 
 
-class Note4Env(gym.Env):
-    metadata = {'render.modes': ['human', 'ansi']}
+class Note4Env(discrete.DiscreteEnv):
     """chain environment
     This MDP presents moves along a chain of states, with two actions:
      0) forward, which moves forward along the chain but returns no reward
@@ -35,23 +37,78 @@ class Note4Env(gym.Env):
     This MDP is described in CS 188 Note 4 of:
     https://inst.eecs.berkeley.edu/~cs188/fa20/assets/notes/note04.pdf
     """
-    def __init__(self, n=5, slip=0.2, small=1, large=10, discount_factor = 0.1):
-        self.n = n
-        self.slip = slip  # probability of 'slipping' an action
-        self.small = small  # payout at the front of the chain
-        self.large = large  # payout at end of chain
+    metadata = {'render.modes': ['human', 'ansi']}
+
+    def __init__(self):
+
+        self.desc = np.asarray(MAP, dtype='c')
+        self.n = 6
+        self.slip = 0.2  # probability of 'slipping' an action
+        self.small = 1  # payout at the front of the chain
+        self.large = 10  # payout at end of chain
         self.state = 2  # Start in the middle of the chain
-        self.action_space = [0, 1, 2] #0 is forward, 1 is backward, 2 is exit
-        self.discount_factor = discount_factor
-        self.observation_space = spaces.Discrete(self.n)
+        self.s = self.state
+        self.action_space = spaces.Discrete(3) #0 is backward, 1 is forward, 2 is exit
+        self.discount_factor = 0.1
+        self.observation_space = spaces.Discrete(self.n) # 0, 1, 2, 3, 4, and 5 (terminal state)
         self.seed()
+
+        num_actions = self.action_space.n
+        num_states = self.observation_space.n
+        initial_state_distrib = np.array([0, 0, 1, 0, 0, 0])
+
+
+        # {action: [(probability, nextstate, reward, done)]}
+        P = {state: {action: [] for action in range(num_actions)} for state in range(num_states)}
+
+        for state in range(num_states):
+            for action in range(num_actions):
+                if state == 0:
+                    if action == 0:
+                        P[state][action].append((1-self.slip, state, 0, False))
+                        P[state][action].append((self.slip, state+1, 0, False))
+                    elif action == 1:
+                        P[state][action].append((1-self.slip, state+1, 0, False))
+                        P[state][action].append((self.slip, state, 0, False))
+                    elif action == 2:
+                        P[state][action].append((1, 5, 10, True))
+
+                elif state > 0 and state < num_states - 2:
+                    if action == 0:
+                        P[state][action].append((1-self.slip, state-1, 0, False))
+                        P[state][action].append((self.slip, state+1, 0, False))
+                    elif action == 1:
+                        P[state][action].append((1-self.slip, state+1, 0, False))
+                        P[state][action].append((self.slip, state-1, 0, False))
+                    elif action == 2:
+                        P[state][action].append((1, state, 0, False))
+                    
+                elif state == num_states - 2:
+                    if action == 0:
+                        P[state][action].append((1-self.slip, state-1, 0, False))
+                        P[state][action].append((self.slip, state, 0, False))
+                    elif action == 1:
+                        P[state][action].append((1-self.slip, state, 0, False))
+                        P[state][action].append((self.slip, state-1, 0, False))
+                    elif action == 2:
+                        P[state][action].append((1, 5, 1, True))
+                else:
+                    if action == 0:
+                        P[state][action].append((1, state, 0, True))
+                    elif action == 1:
+                        P[state][action].append((1, state, 0, True))
+                    elif action == 2:
+                        P[state][action].append((1, state, 0, True))
+
+        discrete.DiscreteEnv.__init__(self, num_states, num_actions, P, initial_state_distrib)
+
 
     def seed(self, seed=None):
         self.np_random, seed = seeding.np_random(seed)
         return [seed]
     
-    def sample(self):
-        return np.random.choice([0, 1, 2])
+    # def sample(self):
+    #     return np.random.choice([0, 1, 2])
 
     def step(self, action):
         # Discount rewards
@@ -63,7 +120,7 @@ class Note4Env(gym.Env):
             action = not action  # agent slipped, reverse action taken
             
         done = False
-        if self.state < self.n - 1 and self.state > 0:
+        if self.state < self.n - 2 and self.state > 0:
             if action == 0:  # 'backwards'
                 reward = 0
                 self.state -= 1
@@ -80,30 +137,45 @@ class Note4Env(gym.Env):
                 self.state += 1
             else: # 'exit'
                 reward = self.large
+                self.state = 5 # exit
                 done = True
-        else:
+        elif self.state == self.n - 2:
             if action == 0: # 'backwards'
-                reward = 0
                 self.state -= 1
+                reward = 0
             elif action == 1: # 'forwards'
                 reward = 0
             else: # 'exit'
                 reward = self.small
+                self.state = 5 # exit
                 done = True
+        else:
+            if action == 0: # 'backwards'
+                reward = 0
+                done = True
+            elif action == 1: # 'forwards'
+                reward = 0
+                done = True
+            else: # 'exit'
+                reward = 0
+                done = True
+
+        self.s = self.state
             
         return self.state, reward, done, {}
 
     def reset(self):
         self.state = 2
+        self.s = self.state
         self.large = 10
         self.small = 1
         self.slip = 0.2
         self.discount_factor = 0.1
         return self.state
     
-    def render(self, mode="human", done=False):
+    def render(self, mode="human"):
         outfile = StringIO() if mode == 'ansi' else sys.stdout
-        desc = np.asarray(MAP, dtype='c')
+        desc = self.desc
 
         out = desc.copy().tolist()
         out = [[c.decode('utf-8') for c in line] for line in out]
@@ -111,11 +183,11 @@ class Note4Env(gym.Env):
 
         # out[8][8] = utils.colorize(out[8][8], 'yellow', highlight=True)
 
-        if agent_position <= 5 and not done:
+        if agent_position < 5:
             out[2][2*agent_position + 1] = utils.colorize(out[2][2*agent_position + 1], 'yellow', highlight=True)
 
-        if agent_position <= 5 and done:
-            out[2][2*agent_position + 1] = utils.colorize(out[2][2*agent_position + 1], 'green', highlight=True)
+        if agent_position == 5: ## terminal state
+            out[5][1] = utils.colorize(out[5][1], 'green', highlight=True)
 
         outfile.write("\n".join(["".join(row) for row in out]) + "\n")
 
