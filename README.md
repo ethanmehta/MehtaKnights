@@ -1,7 +1,7 @@
 # MehtaKnights
 
-## Learning Objective
-### Overall Objective
+## Learning Objectives
+### Overall Objectives
 - Teach students the basic terminology of reinforcement learning (i.e. policy, reward, state, action, etc.)
 - Introduce students to policy updates and policy gradients as means to optimize policies to solve tasks
 - Provide students with a mathematical understanding of how to optimize policies using these methods
