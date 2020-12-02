@@ -21,6 +21,9 @@
 ### Problem 3 Objectives
 1) Understand how state-of-the-art deep RL algorithms work via an introduction to a3c
 
+### Problem 4 Objectives
+1) Extra problem to help students solidify their understanding of reinforcement learning
+
 ## How to Navigate the Repository
 
 ### Documentation
@@ -48,3 +51,6 @@
 <b> Problem 3 </b> – Located in the prob3 folder in the main directory
 - prob3.ipynb contains the coding assignment
 - prob3_sol.ipynb contains the solution to the coding assignment
+
+<b> Problem 4 </b> – Located in the prob4 folder in the main directory
+- prob4.pdf contains a famous "Bloom's Taxonomy" problem
