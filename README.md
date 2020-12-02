@@ -25,7 +25,9 @@
 
 ### Documentation
 <b> Slide Deck</b> – Named slides.pdf in the main directory
+
 <b> Note</b> – Named note.pdf in the main directory
+
 <b> Quiz</b> – Named quiz.pdf in the main directory, with solutions named quiz_sol.pdf in the main directory
 
 ### Coding Assignment
