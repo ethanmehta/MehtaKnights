@@ -33,7 +33,7 @@
 <b> Quiz</b> – Named quiz.pdf in the main directory, with solutions named quiz_sol.pdf in the main directory
 
 ### Coding Assignment
-<b> Problem 1 </b> – Located in the prob1 folder in the main directory
+<b> Problem 1 </b> – Located in the prob1/gym-note4-mdp folder in the main directory
 - prob1_walkthrough.ipynb contains the first assignment, which is a walkthrough assignment that contains no coding
 - gym-note4-mdp is a folder that contains files and code to build a chain world environment that we developed for students to visualize how agents affect the state of the world in reinforcement learning problems
 
