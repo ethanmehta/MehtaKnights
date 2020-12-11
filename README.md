@@ -47,6 +47,7 @@
 - All other files are caches and are not important to the project
 
 <b> Problem 3 </b> – Located in the prob3 folder in the main directory
+- Note: you need tensorflow2.x to run this portion of the project (Run "pip install tensorflow" to setup)
 - prob3.ipynb contains the coding assignment
 - prob3_sol.ipynb contains the solution to the coding assignment
 
