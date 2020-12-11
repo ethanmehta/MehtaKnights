@@ -2,21 +2,20 @@
 
 ## Learning Objectives
 ### Overall Objectives
-- Teach students the basic terminology of reinforcement learning (i.e. policy, reward, state, action, etc.)
+- Teach students the basic terminology of reinforcement learning (i.e. policy, reward, state, action, etc.) as an extension of classic ECS 16AB control problems
 - Introduce students to policy updates and policy gradients as means to optimize policies to solve tasks
+- Draw clear links between policy optimization, gradient descent, and ideas from control
 - Provide students with a mathematical understanding of how to optimize policies using these methods
 - Expose students to state-of-the-art reinforcement learning models and how they work
 
 ### Problem 1 Objectives
-1) Introduce students to basic terminology in reinforcement learning (i.e. Markov Decision Processes, Rewards, Policies)
-2) Explain how to solve markov decision processes to arrive at good policies
-3) Introduce basic reinforcement learning algorithms that use policy updates (i.e. Direct Evaluation, Temporal Difference Learning, Q-learning)
+1) Introduce students to basic terminology in reinforcement learning (i.e. policy, reward, state, action)
+2) Show students the effectiveness of intelligent reinforcement learning agents
 
 ### Problem 2 Objectives
-1) Help students understand cases in which policy update methods from problem 1 do not solve the task well
-2) Introduce policy gradients to optimize a policy via gradient ascent
-3) Characterize a policy as a neural network, thus providing exposure to deep reinforcement learning
-4) Allow students to tie their new skills to old problems, namely the Segway problem from EECS 16AB
+1) Teach students about policy gradients as a means to optimize a policy via gradient ascent
+2) Characterize more advanced policies as a neural network, thus providing exposure to deep reinforcement learning
+3) Allow students to tie their new skills to old problems, namely the Segway problem from EECS 16AB
 
 ### Problem 3 Objectives
 1) Understand how state-of-the-art deep RL algorithms work via an introduction to a3c
@@ -35,8 +34,7 @@
 
 ### Coding Assignment
 <b> Problem 1 </b> – Located in the prob1 folder in the main directory
-- prob1.ipynb contains the coding assignment
-- prob1_sol.ipynb contains the solution to the coding assignment
+- prob1_walkthrough.ipynb contains the first assignment, which is a walkthrough assignment that contains no coding
 - gym-note4-mdp is a folder that contains files and code to build a chain world environment that we developed for students to visualize how agents affect the state of the world in reinforcement learning problems
 
 <b> Problem 2 </b> – Located in the prob2 folder in the main directory
