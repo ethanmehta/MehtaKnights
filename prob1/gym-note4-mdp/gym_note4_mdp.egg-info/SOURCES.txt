@@ -1,5 +1,4 @@
 README.md
-reinforcement_learning.ipynb
 setup.py
 .ipynb_checkpoints/reinforcement_learning-checkpoint.ipynb
 gym_note4_mdp/__init__.py
