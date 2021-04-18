@@ -2,7 +2,7 @@
 
 ## Learning Objectives
 ### Overall Objectives
-- Teach students the basic terminology of reinforcement learning (i.e. policy, reward, state, action, etc.) as an extension of classic ECS 16AB control problems
+- Teach students the basic terminology of reinforcement learning (i.e. policy, reward, state, action, etc.) as an extension of classic EECS 16AB control problems
 - Introduce students to policy updates and policy gradients as means to optimize policies to solve tasks
 - Draw clear links between policy optimization, gradient descent, and ideas from control
 - Provide students with a mathematical understanding of how to optimize policies using these methods
